@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tic Tac Toe</title>
+    <style>
+      .parent {
+        width: 21%;
+        aspect-ratio: 1;
+        display: grid;
+        border: 1px solid black;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin: 10% auto;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        /* background:linear-gradient(rgb(7, 7, 190),rgb(86, 86, 192),rgb(35, 35, 217)); */
+        background-color: aliceblue;
+      }
+      .child {
+        border: 1px solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* color: rgba(0, 0, 0, 0.773); */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parent">
+      <div class="child" id="box1"></div>
+      <div class="child" id="box2"></div>
+      <div class="child" id="box3"></div>
+      <div class="child" id="box4"></div>
+      <div class="child" id="box5"></div>
+      <div class="child" id="box6"></div>
+      <div class="child" id="box7"></div>
+      <div class="child" id="box8"></div>
+      <div class="child" id="box9"></div>
+    </div>
+    <script>
+      const isWinnerFound = ([boolean, symbol]) => {
+        if (boolean) {
+          winMessage(symbol);
+          document.querySelectorAll(".child").forEach((box) => {
+            box.onclick = null;
+          });
+        }
+      };
+
+      const getWinnerSets = () => {
+        const combinations = [
+          [1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9],
+          [1, 4, 7],
+          [3, 5, 7],
+          [2, 5, 8],
+          [3, 6, 9],
+          [1, 5, 9],
+        ];
+        const winnerSets = combinations.map((set) => new Set(set));
+        return winnerSets;
+      };
+
+      const isPlayerWon = (playerSet) => {
+        const winnerCombinations = getWinnerSets();
+        return winnerCombinations.some((set) => set.isSubsetOf(playerSet));
+      };
+
+      const winMessage = (symbol) => {
+        const heading = document.createElement("h1");
+        const message =
+          symbol === "❌"
+            ? "first player won the game"
+            : "second player won the game";
+        heading.textContent = message;
+        heading.style.fontFamily = "serif";
+        heading.style.textTransform = "capitalize";
+        heading.style.color = "rgba(0, 0, 0, 0.8)";
+        heading.style.marginLeft = "40%";
+        document.body.append(heading);
+      };
+
+      const playerData = (input, inputs, event, symbol, count) => {
+        event.target.textContent = symbol;
+        event.target.style.fontSize = "50px";
+        event.target.onclick = "null";
+        inputs.push(input);
+        console.log(inputs);
+        return [isPlayerWon(new Set(inputs)), symbol, count];
+      };
+
+      const changeBackground = () => {
+        let pressedNo = 0;
+        const player1 = [];
+        const player2 = [];
+
+        return function (event, cellNo) {
+          pressedNo++;
+          return pressedNo % 2 === 1
+            ? playerData(cellNo, player1, event, "❌", pressedNo)
+            : playerData(cellNo, player2, event, "⭕️", pressedNo);
+        };
+      };
+
+      const box1 = document.getElementById("box1");
+      const box2 = document.getElementById("box2");
+      const box3 = document.getElementById("box3");
+      const box4 = document.getElementById("box4");
+      const box5 = document.getElementById("box5");
+      const box6 = document.getElementById("box6");
+      const box7 = document.getElementById("box7");
+      const box8 = document.getElementById("box8");
+      const box9 = document.getElementById("box9");
+
+      const startGame = () => {
+        const cliked = changeBackground();
+
+        box1.onclick = function (event) {
+          isWinnerFound(cliked(event, 1));
+        };
+
+        box2.onclick = function (event) {
+          isWinnerFound(cliked(event, 2));
+        };
+
+        box3.onclick = function (event) {
+          isWinnerFound(cliked(event, 3));
+        };
+
+        box4.onclick = function (event) {
+          isWinnerFound(cliked(event, 4));
+        };
+
+        box5.onclick = function (event) {
+          isWinnerFound(cliked(event, 5));
+        };
+
+        box6.onclick = function (event) {
+          isWinnerFound(cliked(event, 6));
+        };
+
+        box7.onclick = function (event) {
+          isWinnerFound(cliked(event, 7));
+        };
+
+        box8.onclick = function (event) {
+          isWinnerFound(cliked(event, 8));
+        };
+
+        box9.onclick = function (event) {
+          isWinnerFound(cliked(event, 9));
+        };
+      };
+      const creatButton = () => {
+        const link = document.createElement("a");
+        link.setAttribute(
+          "href",
+          "file:///Users/meenugamadhavi/workspace/html/practice/script/tic_tac_toe.html"
+        );
+        link.textContent = "Play Again";
+        link.style.display = "block";
+        link.style.display = "flex";
+        link.style.width = "10%";
+        link.style.height = "30px";
+        link.style.justifyContent = "center";
+        link.style.alignItems = "center";
+        link.style.textDecoration = "none";
+        link.style.border = "1px solid black";
+        link.style.margin = "auto";
+        link.style.backgroundColor = "aliceblue";
+        document.body.appendChild(link);
+      };
+
+      creatButton();
+      startGame();
+    </script>
+  </body>
+</html>
