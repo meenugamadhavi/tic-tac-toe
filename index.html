@@ -82,19 +82,17 @@
 
       const playerData = (input, inputs, event, symbol, count) => {
         const element = event.target;
-        console.log(element);
-        event.target.textContent = symbol;
-        event.target.style.fontSize = "50px";
-        event.target.onclick = "null";
-        inputs.push(input);
-        console.log(inputs);
-        return [isPlayerWon(new Set(inputs)), symbol, count];
+        element.textContent = symbol;
+        element.style.fontSize = "50px";
+        element.onclick = "null";
+        inputs.add(input);
+        return [isPlayerWon(inputs), symbol, count];
       };
 
       const changeBackground = () => {
         let pressedNo = 0;
-        const player1 = [];
-        const player2 = [];
+        const player1 = new Set();
+        const player2 = new Set();
 
         return function (event, cellNo) {
           pressedNo++;
