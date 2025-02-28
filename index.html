@@ -81,6 +81,8 @@
       };
 
       const playerData = (input, inputs, event, symbol, count) => {
+        const element = event.target;
+        console.log(element);
         event.target.textContent = symbol;
         event.target.style.fontSize = "50px";
         event.target.onclick = "null";
@@ -102,54 +104,14 @@
         };
       };
 
-      const box1 = document.getElementById("box1");
-      const box2 = document.getElementById("box2");
-      const box3 = document.getElementById("box3");
-      const box4 = document.getElementById("box4");
-      const box5 = document.getElementById("box5");
-      const box6 = document.getElementById("box6");
-      const box7 = document.getElementById("box7");
-      const box8 = document.getElementById("box8");
-      const box9 = document.getElementById("box9");
-
       const startGame = () => {
         const cliked = changeBackground();
-
-        box1.onclick = function (event) {
-          isWinnerFound(cliked(event, 1));
-        };
-
-        box2.onclick = function (event) {
-          isWinnerFound(cliked(event, 2));
-        };
-
-        box3.onclick = function (event) {
-          isWinnerFound(cliked(event, 3));
-        };
-
-        box4.onclick = function (event) {
-          isWinnerFound(cliked(event, 4));
-        };
-
-        box5.onclick = function (event) {
-          isWinnerFound(cliked(event, 5));
-        };
-
-        box6.onclick = function (event) {
-          isWinnerFound(cliked(event, 6));
-        };
-
-        box7.onclick = function (event) {
-          isWinnerFound(cliked(event, 7));
-        };
-
-        box8.onclick = function (event) {
-          isWinnerFound(cliked(event, 8));
-        };
-
-        box9.onclick = function (event) {
-          isWinnerFound(cliked(event, 9));
-        };
+        const child = document.querySelectorAll(".child");
+        child.forEach((element, index) => {
+          element.onclick = function (event) {
+            isWinnerFound(cliked(event, index + 1));
+          };
+        });
       };
       const creatButton = () => {
         const link = document.createElement("a");
